@@ -1,7 +1,7 @@
 <div>
     <div>
       <div>
-          <app-pip-display [clickFunction]="selectPip" [pips]="possibleColours" (pipSelectionEvent)="handlePipSelectedEvent($event)"></app-pip-display>
+          <app-pip-display [pips]="possibleColours" (pipSelectionEvent)="handlePipSelectedEvent($event)"></app-pip-display>
           <button (click)="onClearButtonClick()">Clear</button>
           <button (click)="onSubmitButtonClick()">Submit</button>
           <button *ngIf="isGameDone" (click)="onNewGameButtonClick()">New Game</button>
