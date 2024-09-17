@@ -1,7 +1,19 @@
 <div>
     <div>
       <div>
-          <app-pip-display [clickFunction]="selectPip" [pips]="possibleColours" (pipSelectionEvent)="handlePipSelectedEvent($event)"></app-pip-display>
+        <h2>How to play</h2>
+        The aim is to guess a secret code consisting of a series of 4
+        colored circles. Each guest results in feedback narrowing down the possibilities of the
+        code. The winner solves the secret code with as little guesses as possible.
+
+        NOTES
+        (a) A black small circle to indicate a Code Circle of the right color and in the right position
+        (without indication of which Code Circle it corresponds to).
+        (b) A light orange small circle indicates a Code Circle of the right color but in the wrong position.
+
+      </div>
+      <div>
+          <app-pip-display [pips]="possibleColours" (pipSelectionEvent)="handlePipSelectedEvent($event)"></app-pip-display>
           <button (click)="onClearButtonClick()">Clear</button>
           <button (click)="onSubmitButtonClick()">Submit</button>
           <button *ngIf="isGameDone" (click)="onNewGameButtonClick()">New Game</button>
