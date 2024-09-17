@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 50px;
+    border: 1px solid;
+    flex-wrap: wrap;
+}
+
+.circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.black {
+    background-color: black;
+}
+
+.orange {
+    background-color: orange;
+}
+
+.blank {
+    background-color: #F5F5F5;
+    border: 1px solid #C0C0C0;
+}
