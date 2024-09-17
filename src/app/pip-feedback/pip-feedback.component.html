@@ -1,5 +1,0 @@
-<div class="container" *ngFor="let round of rounds;">
-  <div [ngClass]="['indicator', round.status]"></div>
-  <app-pip-display [pips]="round.currentChoice"></app-pip-display>
-  <app-guess-feedback-display [pips]="round.guessFeedback"></app-guess-feedback-display>
-</div>
