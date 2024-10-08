@@ -8,6 +8,7 @@ import { Component,OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'mastermind-ng';
     isGameDone:boolean
+    isChecked:boolean
     rounds: Round[]
     possibleColours: string[]
     numberOfRounds:number
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit {
   
     constructor() {
       this.isGameDone = false
+      this.isChecked = false
       this.rounds = []
       this.possibleColours = [
         'DarkBlue',
@@ -42,6 +44,14 @@ export class AppComponent implements OnInit {
       
     }
 
+    isCheckedChange(e){
+      if (window.confirm("Changing this setting will start a new game. do you want to continue?")) {
+        this.isChecked = !this.isChecked
+        this.initializeGame();
+      }
+      e.target.checked = this.isChecked;
+    }
+
     initializeGame(){
       this.rounds = []
       this.isGameDone = false
@@ -58,8 +68,36 @@ export class AppComponent implements OnInit {
       return items[rand]
 
     }
+    pickRandomIndex(items){
+      const rand = Math.floor(Math.random() * items.length)
+      return rand
+
+    }
 
     generateSolution(colours,number){
+      if( this.isChecked ){
+        return this.generateSolutionWithDuplicate(colours,number)
+      }
+
+      return this.generateSolutionWithoutDuplicate(colours,number)
+    }
+
+    generateSolutionWithoutDuplicate(colours,number){
+      const tempSol = this.generateListOfStuff(number,'');
+      const tempColours = [...colours]
+
+      for(let i = 0; i< tempSol.length; i++){
+        
+        const index = this.pickRandomIndex(tempColours)
+        tempSol[i] = tempColours[index]
+        tempColours.splice(index,1)
+      }
+
+      return [...tempSol]
+
+    }
+
+    generateSolutionWithDuplicate(colours,number){
       const tempSol = this.generateListOfStuff(number,'');
       for(let i = 0; i< tempSol.length; i++){
         
@@ -126,8 +164,34 @@ export class AppComponent implements OnInit {
       ]
 
     }
+
+    checkForBlanks(){
+      return this.rounds[this.currentRound].currentChoice.includes('blank');
+    }
+
+    checkForPreviousGuess(){
+      const currentChoice = this.rounds[this.currentRound].currentChoice;
+      for(let i = 0; i < this.currentRound; i++ ){
+        const prevChoice = this.rounds[i].currentChoice;
+        if ( JSON.stringify(prevChoice) == JSON.stringify(currentChoice))
+        {
+          return true;
+        }
+      }
+
+      return false;
+    }
   
     onSubmitButtonClick(){
+      const hasBlanks = this.checkForBlanks();
+      if (hasBlanks){
+        alert("Each guess must have 4 colours, duplicates are allowed")
+        return
+      }
+      if( this.checkForPreviousGuess() ){
+        alert("That guess was made already. Please try a different guess")
+        return
+      }
       this.generateGuessFeedback()
       this.rounds[this.currentRound].status = "completed";
       this.generateGameResult()
