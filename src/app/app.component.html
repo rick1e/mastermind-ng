@@ -1,6 +1,7 @@
 <div>
     <div>
       <div>
+        <h1>Mastermind v0.0.4</h1>
         <h2>How to play</h2>
         The aim is to guess a secret code consisting of a series of 4
         colored circles. Each guess results in feedback narrowing down the possibilities of the
@@ -28,6 +29,9 @@
     </div>
     <div>
       <app-pip-feedback [rounds]="rounds"></app-pip-feedback>
+    </div>
+    <div>
+      <app-statistics [stats]="stats"></app-statistics>
     </div>
 
 </div>

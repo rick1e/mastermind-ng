@@ -7,6 +7,7 @@ import { PipFeedbackComponent } from './pip-feedback/pip-feedback.component';
 import { GameResultComponent } from './game-result/game-result.component';
 import { PipDisplayComponent } from './pip-display/pip-display.component';
 import { GuessFeedbackDisplayComponent } from './guess-feedback-display/guess-feedback-display.component';
+import { StatisticsComponent } from './statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { GuessFeedbackDisplayComponent } from './guess-feedback-display/guess-fe
     PipFeedbackComponent,
     GameResultComponent,
     PipDisplayComponent,
-    GuessFeedbackDisplayComponent
+    GuessFeedbackDisplayComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule

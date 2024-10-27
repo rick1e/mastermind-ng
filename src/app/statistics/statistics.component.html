@@ -1,0 +1,19 @@
+<p *ngFor="let stat of stats| keyvalue" >
+  {{stats}}
+  {{stat.key}} <br/>
+  Played : {{stat.value.played}} <br/>
+  Won : {{stat.value.won}} <br/>
+
+  Win  distribution <br/>
+  1 : {{stat.value.dist[0]}} <br/>
+  2 : {{stat.value.dist[1]}} <br/>
+  3 : {{stat.value.dist[2]}} <br/>
+  4 : {{stat.value.dist[3]}} <br/>
+  5 : {{stat.value.dist[4]}} <br/>
+  6 : {{stat.value.dist[5]}} <br/>
+  7 : {{stat.value.dist[6]}} <br/>
+  8 : {{stat.value.dist[7]}} <br/>
+  9 : {{stat.value.dist[8]}} <br/>
+  10 : {{stat.value.dist[9]}} <br/>
+</p>
+  

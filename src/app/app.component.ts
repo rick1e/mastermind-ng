@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
     currentRound: number
     currentSolution: string[]
     gameResult: string
+    stats: {}
   
     constructor() {
       this.isGameDone = false
@@ -40,6 +41,7 @@ export class AppComponent implements OnInit {
   
     ngOnInit() {
       this.initializeGame();
+      this.stats = this.loadPlayerStats();
       
       
     }
@@ -197,6 +199,9 @@ export class AppComponent implements OnInit {
       this.generateGameResult()
       if(this.isGameDone)
       {
+        const mode = this.getCurrentMode();
+        this.updateStats(mode,this.currentRound);
+        this.savePlayerStats(this.stats);
         return
       }
       this.numberOfPipsSelected = 0;
@@ -257,6 +262,37 @@ export class AppComponent implements OnInit {
       // Check if all elements are the same
       return arr1.every((value, index) => value === arr2[index]);
   }
+
+  updateStats(mode,roundIndex){
+    if(!this.stats[mode]){
+      this.stats[mode] = new Stats;
+    }
+
+    this.stats[mode].played += 1
+    if( roundIndex+1 == this.numberOfRounds){
+      return
+    }
+    this.stats[mode].won += 1
+    this.stats[mode].dist[roundIndex] += 1
+
+
+  }
+  savePlayerStats(stats) {
+    localStorage.setItem('playerStats', JSON.stringify(stats));
+  }
+  loadPlayerStats() {
+      const stats = localStorage.getItem('playerStats');
+      console.log(stats);
+      return stats ? JSON.parse(stats) : {} // Return null if no stats are found
+  }
+
+  getCurrentMode(){
+    if( this.isChecked)
+    {
+      return "duplicates";
+    }
+    return "normal";
+  }
 }
 
 class Round{
@@ -265,3 +301,17 @@ class Round{
   guessFeedback:string[]
 }
 
+class Stats{
+
+  played:number
+  won: number
+  dist: number[]
+
+  constructor(){
+    this.played = 0;
+    this.won = 0,
+    this.dist = [
+        0,0,0,0,0,0,0,0,0,0
+      ]
+  }
+}
