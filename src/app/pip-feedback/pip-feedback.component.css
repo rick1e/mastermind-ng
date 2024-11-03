@@ -1,25 +1,31 @@
 .container {
     display: flex;
-    justify-content: space-evenly;
-    border: 1px solid;
+    justify-content: space-between;
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
     flex-wrap: wrap;
+    align-items: center;
+    padding: 8px 16px;
+    margin-top: 8px;
 }
 
 .indicator {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 1px solid;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
 }
 
 .active {
-    background-color: aquamarine;
+    background-color: #80f2ff;
+    border: 1px solid #1bd7ec; 
 }
 
 .completed {
-    background-color: navy;
+    background-color: #12838f;
+    border: 1px solid #0c5962;
 }
 
 .blank {
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
+    border: 1px solid #d9d9d9;
 }

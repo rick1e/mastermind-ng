@@ -16,8 +16,11 @@ export class AppComponent implements OnInit {
     numberOfPipsSelected: number
     currentRound: number
     currentSolution: string[]
+    hiddenSolution: string[]
+    displaySolution: string[]
     gameResult: string
     stats: {}
+    modalState: {}
   
     constructor() {
       this.isGameDone = false
@@ -34,7 +37,10 @@ export class AppComponent implements OnInit {
       ]
       this.numberOfChoices = 4
       this.numberOfRounds = 10
-      
+      this.modalState = {
+        howTo : "hide",
+        stats : "hide"
+      }
       
       
      }
@@ -61,7 +67,9 @@ export class AppComponent implements OnInit {
       this.currentRound = 0
       this.generateEmptyRounds(this.numberOfRounds,this.numberOfChoices);
       this.currentSolution = this.generateSolution(this.possibleColours,this.numberOfChoices)
-      this.gameResult = 'playying'
+      this.hiddenSolution = this.generateHiddenSolution(this.numberOfChoices)
+      this.displaySolution = this.hiddenSolution
+      this.gameResult = 'lock'
       this.rounds[this.currentRound].status = "active";
     }
 
@@ -126,6 +134,10 @@ export class AppComponent implements OnInit {
         this.rounds.push(round)
   
       }
+    }
+
+    generateHiddenSolution(number){
+      return this.generateListOfStuff(number,'Hidden');
     }
   
     generateListOfBlanks(number){
@@ -202,6 +214,7 @@ export class AppComponent implements OnInit {
         const mode = this.getCurrentMode();
         this.updateStats(mode,this.currentRound);
         this.savePlayerStats(this.stats);
+        this.displaySolution = this.currentSolution;
         return
       }
       this.numberOfPipsSelected = 0;
@@ -210,7 +223,9 @@ export class AppComponent implements OnInit {
       
     }
     onNewGameButtonClick(){
-      this.initializeGame();
+      if (window.confirm("This will start a new game. do you want to continue?")) {
+        this.initializeGame();
+      }
     }
     generateGuessFeedback(){
       const guessFeedback = [
@@ -243,12 +258,12 @@ export class AppComponent implements OnInit {
     }
     generateGameResult(){
       if( this.arraysAreEqual(this.rounds[this.currentRound].currentChoice,this.currentSolution)){
-        this.gameResult = 'You Win'
+        this.gameResult = 'unlock'
         this.isGameDone = true
         return
       }
       if( this.currentRound+1 == this.numberOfRounds){
-        this.gameResult = 'You Lose'
+        this.gameResult = 'lose'
         this.isGameDone = true
       }
     }
@@ -292,6 +307,14 @@ export class AppComponent implements OnInit {
       return "duplicates";
     }
     return "normal";
+  }
+  openModal(id){
+    console.log(id)
+    this.modalState[id] = "show";
+    console.log(this.modalState)
+  }
+  closeModal(id){
+    this.modalState[id] = "hide"
   }
 }
 

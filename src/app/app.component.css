@@ -1,0 +1,79 @@
+.container {
+    width: 412px;
+    border: 1px solid #eee;
+    margin: 0 auto;
+    padding: 16px;
+    background: #ffffff;
+    border-radius: 5px;
+}
+
+.hide {
+    display: none;
+}
+
+#duplicates, button {
+    width: 182px;
+    height: 40px;
+    font-size: 20px;
+    line-height: 24px; 
+    border-style: solid;
+    border-radius: 5px;
+}
+
+.primary {
+    border-color: #61a47a;
+    background: #c4ffda;
+    color: #61a47a;
+}
+
+.secondary {
+    border-color: #424242;
+    background: #ffffff;
+    color: #424242;
+}
+
+#controls{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap
+}
+
+#control-container{
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    padding: 8px;
+    margin: 8px 0px;
+}
+#duplicates {
+    border: 2px solid;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: Arial;
+    align-content: center;
+}
+
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+.modal {
+    width : 360px;
+    min-height : 60%;
+    padding : 16px;
+    border: 2px solid #a9a9a9;
+    border-radius: 5px; 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+}
+
+.m-bot {
+    margin-bottom: 8px; 
+}

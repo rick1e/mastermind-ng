@@ -1,8 +1,9 @@
 .container {
     display: flex;
-    justify-content: space-evenly;
-    width: 50px;
-    border: 1px solid;
+    justify-content: space-between;
+    align-content: space-between;
+    width: 48px;
+    height: 48px;
     flex-wrap: wrap;
 }
 

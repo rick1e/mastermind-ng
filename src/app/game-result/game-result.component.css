@@ -1,0 +1,67 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 8px 16px;
+    margin-top: 8px;
+}
+
+.lock {
+    width: 32px;
+    height: 32px;
+    align-content: center;
+    text-align: center;
+}
+
+.lock::before{
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f023";
+    font-size: 32px;
+}
+
+.unlock {
+    width: 32px;
+    height: 32px;
+    align-content: center;
+    text-align: center;
+}
+
+.unlock::before{
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f3c1";
+    font-size: 32px;
+}
+
+.lose {
+    width: 32px;
+    height: 32px;
+    align-content: center;
+    text-align: center;
+}
+
+.lose::before{
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f057";
+    font-size: 32px;
+}

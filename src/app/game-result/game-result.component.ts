@@ -13,7 +13,7 @@ export class GameResultComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    
+
   }
 
 }
