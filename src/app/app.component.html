@@ -1,29 +1,27 @@
 <div class="container">
     <div>
       <div>
-        <h1>Mastermind v0.1.0</h1>
+        <h1>Mastermind v0.2.0 <div class="info" (click)="openModal('info')"></div></h1>
+        <h2>{{modeDisplayDict[currentMode]}} Mode</h2>
       </div>
       <div id="controls">
           <button class="secondary m-bot" (click)="openModal('stats')">Stats</button>
           <button class="primary m-bot" (click)="openModal('howTo')">How to play</button>
-          <label id="duplicates">
-            <input type="checkbox" (change)="isCheckedChange($event)" />
-            Duplicates
-          </label>
+          <button class="secondary m-bot" (click)="openModal('modes')">Change Mode</button>
           <button class="primary" (click)="onNewGameButtonClick()">New Game</button>
           <div id="control-container">
             <app-pip-display [pips]="possibleColours" (pipSelectionEvent)="handlePipSelectedEvent($event)"></app-pip-display>
           </div>
           <button class="secondary" (click)="onClearButtonClick()">Clear</button>
           <button class="primary" (click)="onSubmitButtonClick()">Submit</button>
-          
+
       </div>
       <app-game-result  [resultText]="gameResult" [answer]="displaySolution"></app-game-result>
     </div>
     <div>
       <app-pip-feedback [rounds]="rounds"></app-pip-feedback>
     </div>
-    
+
     <div id="howto" [ngClass]="['modal', modalState['howTo']]">
       <h2>How to play</h2>
       <pre>
@@ -40,11 +38,33 @@ NOTES
       </pre>
       <button class="primary" (click)="closeModal('howTo')">Close</button>
     </div>
-    
+
     <div id="stats" [ngClass]="['modal', modalState['stats']]">
       <h2>Your Stats</h2>
       <app-statistics [stats]="stats"></app-statistics>
       <button class="primary" (click)="closeModal('stats')">Close</button>
+    </div>
+
+    <div id="modes" [ngClass]="['modal', modalState['modes']]">
+      <h2>Select a game mode </h2>
+      <button class="secondary m-bot mode-button" (click)="selectArcadeMode()">Arcade (no duplicates)</button>
+      <button class="secondary m-bot mode-button" (click)="selectDuplicateMode()">Hard (with duplicates)</button>
+
+      <button class="primary" (click)="closeModal('modes')">Close</button>
+    </div>
+
+    <div id="info" [ngClass]="['modal', modalState['info']]">
+      <h2>Change Log</h2>
+      <pre>
+v0.2.0
+- added change log
+  so that you can see what newe things I added ;)
+- added a mode change button and modal
+- removed the duplicates button
+  that feature is now in the mode change button
+      </pre>
+
+      <button class="primary" (click)="closeModal('info')">Close</button>
     </div>
 
 </div>

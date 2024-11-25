@@ -8,7 +8,13 @@ import { Component,OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'mastermind-ng';
     isGameDone:boolean
-    isChecked:boolean
+    modeStringDuplicate = "duplicate"
+    modeStringArcade = "normal"
+    modeDisplayDict = {
+      "normal": "Arcade",
+      "duplicate": "Hard",
+    }
+    currentMode: string
     rounds: Round[]
     possibleColours: string[]
     numberOfRounds:number
@@ -21,11 +27,11 @@ export class AppComponent implements OnInit {
     gameResult: string
     stats: {}
     modalState: {}
-  
+
     constructor() {
       this.isGameDone = false
-      this.isChecked = false
       this.rounds = []
+      this.currentMode = this.modeStringArcade
       this.possibleColours = [
         'DarkBlue',
         'BrightBlue',
@@ -39,25 +45,35 @@ export class AppComponent implements OnInit {
       this.numberOfRounds = 10
       this.modalState = {
         howTo : "hide",
-        stats : "hide"
+        stats : "hide",
+        modes : "hide",
+        info : "hide"
       }
-      
-      
+
+
      }
-  
+
     ngOnInit() {
       this.initializeGame();
       this.stats = this.loadPlayerStats();
-      
-      
+
+
     }
 
-    isCheckedChange(e){
+    selectArcadeMode(){
+      this.selectGameMode(this.modeStringArcade);
+    }
+
+    selectDuplicateMode(){
+      this.selectGameMode(this.modeStringDuplicate);
+    }
+
+    selectGameMode(mode){
       if (window.confirm("Changing this setting will start a new game. do you want to continue?")) {
-        this.isChecked = !this.isChecked
+        this.currentMode = mode;
         this.initializeGame();
+        this.closeModal('modes');
       }
-      e.target.checked = this.isChecked;
     }
 
     initializeGame(){
@@ -85,11 +101,12 @@ export class AppComponent implements OnInit {
     }
 
     generateSolution(colours,number){
-      if( this.isChecked ){
+      if( this.currentMode == this.modeStringDuplicate ) {
         return this.generateSolutionWithDuplicate(colours,number)
       }
-
-      return this.generateSolutionWithoutDuplicate(colours,number)
+      if( this.currentMode == this.modeStringArcade ) {
+        return this.generateSolutionWithoutDuplicate(colours, number)
+      }
     }
 
     generateSolutionWithoutDuplicate(colours,number){
@@ -97,7 +114,7 @@ export class AppComponent implements OnInit {
       const tempColours = [...colours]
 
       for(let i = 0; i< tempSol.length; i++){
-        
+
         const index = this.pickRandomIndex(tempColours)
         tempSol[i] = tempColours[index]
         tempColours.splice(index,1)
@@ -110,19 +127,19 @@ export class AppComponent implements OnInit {
     generateSolutionWithDuplicate(colours,number){
       const tempSol = this.generateListOfStuff(number,'');
       for(let i = 0; i< tempSol.length; i++){
-        
+
         tempSol[i] = this.pickRandomItem(colours)
       }
 
       return [...tempSol]
 
     }
-  
+
     generateEmptyRounds(numberOfRounds,numberOfPips){
-  
+
       for(let i = 0; i < numberOfRounds; i++){
         const round = new Round()
-  
+
         round.status='blank'
         round.currentChoice = [
           ...this.generateListOfBlanks(numberOfPips)
@@ -130,16 +147,16 @@ export class AppComponent implements OnInit {
         round.guessFeedback=[
           ...this.generateListOfBlanks(numberOfPips)
         ]
-  
+
         this.rounds.push(round)
-  
+
       }
     }
 
     generateHiddenSolution(number){
       return this.generateListOfStuff(number,'Hidden');
     }
-  
+
     generateListOfBlanks(number){
       return this.generateListOfStuff(number,'blank');
     }
@@ -149,7 +166,7 @@ export class AppComponent implements OnInit {
       for(let i = 0; i < number; i++){
         list.push(stuff);
       }
-  
+
       return list;
     }
 
@@ -160,7 +177,7 @@ export class AppComponent implements OnInit {
     handlePipSelectedEvent(colour: string) {
       if(this.isGameDone)
         return
-      
+
       if(this.numberOfPipsSelected == this.numberOfChoices)
         return
       this.rounds[this.currentRound].currentChoice[this.numberOfPipsSelected] = colour;
@@ -195,7 +212,7 @@ export class AppComponent implements OnInit {
 
       return false;
     }
-  
+
     onSubmitButtonClick(){
       const hasBlanks = this.checkForBlanks();
       if (hasBlanks){
@@ -220,7 +237,7 @@ export class AppComponent implements OnInit {
       this.numberOfPipsSelected = 0;
       this.currentRound ++;
       this.rounds[this.currentRound].status = "active";
-      
+
     }
     onNewGameButtonClick(){
       if (window.confirm("This will start a new game. do you want to continue?")) {
@@ -233,15 +250,15 @@ export class AppComponent implements OnInit {
       ]
       const tempGuess = [...this.rounds[this.currentRound].currentChoice]
       for(let i = 0; i < this.numberOfChoices; i++){
-        const sol = this.currentSolution[i]; 
+        const sol = this.currentSolution[i];
 
         if(sol === tempGuess[i]){
           guessFeedback[i] = 'black'
           tempGuess[i] = '*'
-        } 
+        }
         else if(tempGuess.includes(sol)){
           const whiteIndex = tempGuess.indexOf(sol);
-          
+
           if(tempGuess[whiteIndex] === this.currentSolution[whiteIndex]){
             guessFeedback[whiteIndex] = 'black'
           }
@@ -273,7 +290,7 @@ export class AppComponent implements OnInit {
       if (arr1.length !== arr2.length) {
           return false;
       }
-  
+
       // Check if all elements are the same
       return arr1.every((value, index) => value === arr2[index]);
   }
@@ -302,11 +319,7 @@ export class AppComponent implements OnInit {
   }
 
   getCurrentMode(){
-    if( this.isChecked)
-    {
-      return "duplicates";
-    }
-    return "normal";
+    return this.currentMode;
   }
   openModal(id){
     console.log(id)
