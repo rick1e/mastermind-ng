@@ -8,11 +8,11 @@ import { Component,OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'mastermind-ng';
     isGameDone:boolean
-    modeStringDuplicate = "duplicate"
+    modeStringDuplicate = "duplicates"
     modeStringArcade = "normal"
     modeDisplayDict = {
       "normal": "Arcade",
-      "duplicate": "Hard",
+      "duplicates": "Hard",
     }
     currentMode: string
     rounds: Round[]
@@ -56,6 +56,7 @@ export class AppComponent implements OnInit {
     ngOnInit() {
       this.initializeGame();
       this.stats = this.loadPlayerStats();
+      this.combineMislabeledStats();
 
 
     }
@@ -316,6 +317,21 @@ export class AppComponent implements OnInit {
       const stats = localStorage.getItem('playerStats');
       console.log(stats);
       return stats ? JSON.parse(stats) : {} // Return null if no stats are found
+  }
+
+  combineMislabeledStats(){
+
+      const mislabel = "duplicate";
+      const correctLabel = this.modeStringDuplicate;
+      let missingWins = 0;
+      for(let i = 0; i< 10; i ++) {
+        this.stats[correctLabel].dist[i] += this.stats[mislabel].dist[i];
+        missingWins += this.stats[mislabel].dist[i];
+      }
+      this.stats[correctLabel].won += missingWins;
+      this.stats[correctLabel].played += this.stats[mislabel].played;
+      delete this.stats[mislabel];
+
   }
 
   getCurrentMode(){
