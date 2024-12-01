@@ -329,6 +329,7 @@ export class AppComponent implements OnInit {
         missingWins += this.stats[mislabel].dist[i];
       }
       this.stats[correctLabel].won += missingWins;
+      this.stats[correctLabel].played += this.stats[mislabel].played;
       delete this.stats[mislabel];
 
   }
