@@ -1,5 +1,5 @@
 <p *ngFor="let stat of stats| keyvalue" >
-  {{stat.key}} <br/>
+  {{statsDisplayName[stat.key]}} <br/>
   Played : {{stat.value.played}} <br/>
   Won : {{stat.value.won}} <br/>
 
@@ -15,4 +15,3 @@
   9 : {{stat.value.dist[8]}} <br/>
   10 : {{stat.value.dist[9]}} <br/>
 </p>
-  
