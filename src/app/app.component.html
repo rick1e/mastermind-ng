@@ -1,7 +1,7 @@
 <div class="container">
     <div>
       <div>
-        <h1>Mastermind v0.2.1 <div class="info" (click)="openModal('info')"></div></h1>
+        <h1>Mastermind v0.3.0 <div class="info" (click)="openModal('info')"></div></h1>
         <h2>{{modeDisplayDict[currentMode]}} Mode</h2>
       </div>
       <div id="controls">
@@ -41,12 +41,13 @@ NOTES
 
     <div id="stats" [ngClass]="['modal', modalState['stats']]">
       <h2>Your Stats</h2>
-      <app-statistics [stats]="stats"></app-statistics>
+      <app-statistics [stats]="stats" [statsDisplayName]="statsDisplayDict"></app-statistics>
       <button class="primary" (click)="closeModal('stats')">Close</button>
     </div>
 
     <div id="modes" [ngClass]="['modal', modalState['modes']]">
       <h2>Select a game mode </h2>
+      <button class="secondary m-bot mode-button" (click)="selectEasyMode()">Easy (no duplicates)</button>
       <button class="secondary m-bot mode-button" (click)="selectArcadeMode()">Arcade (no duplicates)</button>
       <button class="secondary m-bot mode-button" (click)="selectDuplicateMode()">Hard (with duplicates)</button>
 
@@ -56,15 +57,19 @@ NOTES
     <div id="info" [ngClass]="['modal', modalState['info']]">
       <h2>Change Log</h2>
       <pre>
-v0.2.0
-- added change log
-  so that you can see what newe things I added ;)
-- added a mode change button and modal
-- removed the duplicates button
-  that feature is now in the mode change button
+v0.3.0
+- Added an Easy mode
+- Fixed mode display name on stats modal
 v0.2.1
 - fixed a bug with stats name
 - should regroup all duplicate stats pre and post bug
+v0.2.0
+- added change log
+  so that you can see what new things I added ;)
+- added a mode change button and modal
+- removed the duplicates button
+  that feature is now in the mode change button
+
       </pre>
 
       <button class="primary" (click)="closeModal('info')">Close</button>

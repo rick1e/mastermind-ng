@@ -10,14 +10,21 @@ export class AppComponent implements OnInit {
     isGameDone:boolean
     modeStringDuplicate = "duplicates"
     modeStringArcade = "normal"
+    modeStringEasy = "easy"
     modeDisplayDict = {
-      "normal": "Arcade",
-      "duplicates": "Hard",
+      [this.modeStringArcade]: "Arcade",
+      [this.modeStringDuplicate]: "Hard",
+      [this.modeStringEasy]: "Easy",
+    }
+    statsDisplayDict = {
+      [this.modeStringArcade]: "Arcade (no duplicates)",
+      [this.modeStringDuplicate]: "Hard (duplicates)",
+      [this.modeStringEasy]: "Easy (no duplicates)",
     }
     currentMode: string
     rounds: Round[]
     possibleColours: string[]
-    numberOfRounds:number
+    numberOfRounds: number
     numberOfChoices: number
     numberOfPipsSelected: number
     currentRound: number
@@ -69,6 +76,10 @@ export class AppComponent implements OnInit {
       this.selectGameMode(this.modeStringDuplicate);
     }
 
+    selectEasyMode(){
+      this.selectGameMode(this.modeStringEasy);
+    }
+
     selectGameMode(mode){
       if (window.confirm("Changing this setting will start a new game. do you want to continue?")) {
         this.currentMode = mode;
@@ -105,7 +116,7 @@ export class AppComponent implements OnInit {
       if( this.currentMode == this.modeStringDuplicate ) {
         return this.generateSolutionWithDuplicate(colours,number)
       }
-      if( this.currentMode == this.modeStringArcade ) {
+      if( this.currentMode == this.modeStringArcade || this.currentMode == this.modeStringEasy ) {
         return this.generateSolutionWithoutDuplicate(colours, number)
       }
     }
@@ -214,17 +225,21 @@ export class AppComponent implements OnInit {
       return false;
     }
 
-    onSubmitButtonClick(){
+    onSubmitButtonClick() {
       const hasBlanks = this.checkForBlanks();
-      if (hasBlanks){
+      if (hasBlanks) {
         alert("Each guess must have 4 colours, duplicates are allowed")
         return
       }
-      if( this.checkForPreviousGuess() ){
+      if (this.checkForPreviousGuess()) {
         alert("That guess was made already. Please try a different guess")
         return
       }
-      this.generateGuessFeedback()
+      if (this.currentMode == this.modeStringEasy) {
+        this.generateEasyModeGuessFeedback();
+      } else {
+        this.generateGuessFeedback();
+      }
       this.rounds[this.currentRound].status = "completed";
       this.generateGameResult()
       if(this.isGameDone)
@@ -274,6 +289,26 @@ export class AppComponent implements OnInit {
       this.rounds[this.currentRound].guessFeedback = [...guessFeedback.map(str => str.replace('x', 'blank'))];
 
     }
+
+  generateEasyModeGuessFeedback(){
+    const guessFeedback = [
+      ...this.generateListOfStuff(this.numberOfChoices,'x')
+    ]
+    const tempGuess = [...this.rounds[this.currentRound].currentChoice]
+    for(let i = 0; i < this.numberOfChoices; i++){
+      const sol = this.currentSolution[i];
+
+      if(sol === tempGuess[i]){
+        guessFeedback[i] = 'black'
+      }
+      else if(this.currentSolution.includes(tempGuess[i])){
+        guessFeedback[i] = 'orange'
+      }
+    }
+    this.rounds[this.currentRound].guessFeedback = [...guessFeedback.map(str => str.replace('x', 'blank'))];
+
+  }
+
     generateGameResult(){
       if( this.arraysAreEqual(this.rounds[this.currentRound].currentChoice,this.currentSolution)){
         this.gameResult = 'unlock'
