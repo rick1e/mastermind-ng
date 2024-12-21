@@ -41,7 +41,9 @@ NOTES
 
     <div id="stats" [ngClass]="['modal', modalState['stats']]">
       <h2>Your Stats</h2>
+      <div class="modal-content">
       <app-statistics [stats]="stats" [statsDisplayName]="statsDisplayDict"></app-statistics>
+      </div>
       <button class="primary" (click)="closeModal('stats')">Close</button>
     </div>
 
@@ -57,6 +59,8 @@ NOTES
     <div id="info" [ngClass]="['modal', modalState['info']]">
       <h2>Change Log</h2>
       <pre>
+v0.3.1
+- Try to fix the stats modal
 v0.3.0
 - Added an Easy mode
 - Fixed mode display name on stats modal
