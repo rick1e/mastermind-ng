@@ -77,6 +77,10 @@ pre {
     background: #ffffff;
 }
 
+.modal-content {
+    height : 80%;
+}
+
 .m-bot {
     margin-bottom: 8px;
 }
